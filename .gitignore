@@ -6,6 +6,9 @@ venv/
 *dv*.bin
 
 *.jpg
+*.png
+*.jpeg
+*.gif
 
 *.keras
 *.h5
