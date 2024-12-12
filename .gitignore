@@ -12,3 +12,5 @@ venv/
 
 *.keras
 *.h5
+
+10-kubernetes/clothing-model
