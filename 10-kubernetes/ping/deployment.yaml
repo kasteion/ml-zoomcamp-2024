@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-deployment
+spec:
+  selector:
+    matchLabels:
+      app: ping # All pods that have the label app=ping belong to this deployment
+  template:
+    metadata:
+      labels:
+        app: ping # Each pod with get a label app=ping
+    spec:
+      containers:
+        - name: ping-pod
+          image: ping:v001
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 9696
