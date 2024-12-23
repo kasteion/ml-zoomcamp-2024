@@ -174,7 +174,45 @@ kubectl logs churn-predictor-default-00001-deployment-57f4f87bd-lg842 kserve-con
 ### 4. Deploying custom Scikit-Learn images with KServe
 
 - Customizing the Scikit-Learn image
+
+We can clone the kserve repo
+
+```bash
+git clone git@github.com:kserve/kserve.git
+
+cd kserve/python
+
+vim sklearn.Dockerfile
+
+# We can edit the version of python
+# ARG PYTHON_VERSION=3.11
+# Maybe to... but I think that it should be 3.11
+# ARG PYTHON_VERSION=3.12
+
+vim sklearnserver/pyproject.toml
+
+# We can edit the version of scikit-learn
+# scikit-learn = "~1.5.1"
+
+docker build -t kserve-sklearnserver:3.11-1.5.1 -f sklearn.Dockerfile .
+```
+
+Now we will need to train the model again with the correct versions of python and scikit-learn.
+
+> Goto **3. Deploying a Scikit-Learn model with KServe**
+
 - Running KServe service locally
+
+```bash
+docker run -it --rm \
+  -v "$(pwd)/model.joblib:/mnt/models/model.joblib" \
+  -p 8081:8080 \
+  kserve-sklearnserver:3.11-1.5.1 \
+  --model_dir=/mnt/models \
+  --model_name=churn
+
+python churn-test.py
+```
 
 ### 5. Serving Tensorflow models with KServe
 
