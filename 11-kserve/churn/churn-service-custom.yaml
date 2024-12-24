@@ -9,7 +9,7 @@ spec:
     model:
       modelFormat:
         name: sklearn
-      storageUri: "http://172.31.13.90:8000/model.joblib"
+      storageUri: "http://172.31.13.90:8000/churn/model.joblib"
       resources:
         requests:
           cpu: 300m
