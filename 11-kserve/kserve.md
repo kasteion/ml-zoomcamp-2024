@@ -362,6 +362,8 @@ python test_transformer.py
 
 5. Create a new clothes-service.yaml
 
+https://github.com/alexeygrigorev/kfserving-keras-transformer
+
 6. Apply it
 
 ```bash
@@ -374,11 +376,55 @@ kubectl get pod
 
 ### 7. Deploying with Kserve and EKS
 
+https://github.com/alexeygrigorev/kubeflow-deep-learning/blob/main/guide.md
+
 - Creating an EKS cluster
+
+1. Create a config file (cluster.yaml)
+
+```yaml
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: mlzoomcamp-eks
+  region: eu-west-1
+  version: "1.21"
+
+nodeGroups:
+  - name: ng
+    desiredCapacity: 2
+    instanceType: m5.xlarge
+```
+
+```bash
+eksctl create cluster -f cluster.yaml
+```
+
 - Installing KServe on EKS
+
 - Configuring the domain
+
+Using "Route 53"
+
 - Setting up S3 access
 - Deploying the clothing model
+
+Create a bucket:
+
+```bash
+aws s3api create-bucket \
+    --bucket <universal-unique-name> \
+    --region us-east-1 \
+    --create-bucket-configuration LocationConstraint=us-east-1
+```
+
+Upload the model
+
+```bash
+# Tensorflow serving expects a version ie. /0001
+aws s3 cp --recursive clothing-model/1/ s3://mlbookcamp-models/clothing-model/0001/
+```
 
 ### 8. Summary
 
