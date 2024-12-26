@@ -8,6 +8,10 @@ https://github.com/kserve/kserve
 
 https://github.com/kserve/kserve
 
+Samples:
+
+https://github.com/kserve/kserve/tree/master/docs/samples/v1beta1
+
 Write less yaml!
 
 ```yaml
@@ -325,7 +329,47 @@ kubectl logs clothes-predictor-default-00001-deployment-68b9778f7-8qqck kserve-c
 ### 6. KServe transformers
 
 - Why we do need transformers
+
+Because the client doesn't need to know how to transform the data for our model.
+
 - Creating a service fro pre and post processing
+
+https://github.com/kserve/kserve/tree/master/docs/samples/v1beta1/transformer
+
+https://github.com/kserve/website/tree/main/docs/modelserving/v1beta1/transformer/torchserve_image_transformer
+
+1. create image_transformer.py
+
+2. run it
+
+```bash
+python image_transformer.py --predictor_host=localhost:8080 --model_name=clothes --http_port=8081
+```
+
+3. Port forward
+
+```bash
+kubectl get pod
+
+kubectl port-forward clothes-predictor-default-00001-deployment-8466c887b6-fjcgp 8080:8080
+```
+
+4. We can test it locally
+
+```bash
+python test_transformer.py
+```
+
+5. Create a new clothes-service.yaml
+
+6. Apply it
+
+```bash
+kubectl apply -f clothes-service.yaml
+
+kubectl get pod
+```
+
 - Using existing transformers
 
 ### 7. Deploying with Kserve and EKS
